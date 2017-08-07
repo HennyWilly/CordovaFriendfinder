@@ -1,5 +1,5 @@
-//var backendUrl = "http://backend.cordova.svc.cluster.fb9.fh-aachen.de";
-var backendUrl = "http://192.168.178.26:80";
+var backendUrl = "http://backend.cordova.svc.cluster.fb9.fh-aachen.de";
+//var backendUrl = "http://192.168.178.26:80";
 //var backendUrl = "http://10.42.0.1:80";
 //var backendUrl = "http://10.42.0.1:8080";
 //var backendUrl = "http://10.0.2.2:8080";
