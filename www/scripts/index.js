@@ -80,10 +80,14 @@ var app = {
         app._deviceStompInit();
     },
     onResume: function () {
-        app._deviceStompConnect();
+        if (!geoLocation.isBackgroundLocationEnabled()) {
+            app._deviceStompConnect();
+        }
     },
     onPause: function () {
-        app._deviceStompClient.disconnect();
+        if (!geoLocation.isBackgroundLocationEnabled()) {
+            app._deviceStompClient.disconnect();
+        }
     },
     onOAuthExpired: function () {
         oAuthExpired_geo();
