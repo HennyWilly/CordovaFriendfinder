@@ -12,8 +12,22 @@ bld/
 node_modules/
 platforms/*
 !platforms/platforms.json
-www/lib/*
-!www/lib/leaflet-color-markers/
+
+www/lib/stomp-websocket/*
+!www/lib/stomp-websocket/lib
+
+www/lib/sockjs-client/*
+!www/lib/sockjs-client/dist
+
+www/lib/leaflet/*
+!www/lib/leaflet/dist
+
+www/lib/jquery/*
+!www/lib/jquery/dist
+
+www/lib/bootstrap/*
+!www/lib/bootstrap/dist
+
 
 .scannerwork/
 .sonar/

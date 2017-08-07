@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget defaultlocale="de-DE" 
         id="io.cordova.myapp5b5d7a" 
-		version="0.01" 
+		version="0.0.1" 
 		xmlns="http://www.w3.org/ns/widgets" 
 		xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Friendfinder</name>
