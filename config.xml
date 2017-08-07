@@ -7,7 +7,7 @@
     <name>Friendfinder</name>
 	
     <description>
-	    Diese App wurde im Zuge einer Masterseminararbeit erstellt, das plattform-unabhängige Programmieren mit Cordova zu veranschaulichen.
+	    Diese App wurde im Zuge einer Masterseminararbeit erstellt, um das plattform-unabhängige Programmieren mit Cordova zu veranschaulichen.
 	</description>
 	
     <author email="dev@cordova.apache.org" href="http://cordova.io">Ihr Name hier</author>  
