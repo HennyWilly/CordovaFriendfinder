@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <!--
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com http://10.0.2.2:8080 http://localhost:8080 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src *;">
+        -->
+
+        <link rel="shortcut icon" href="favicon.ico"/>
+
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+        <script type="text/javascript" src="lib/sockjs-client/dist/sockjs.min.js"></script>
+        <script type="text/javascript" src="lib/stomp-websocket/lib/stomp.min.js"></script>
+
+        <script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="lib/leaflet/dist/leaflet.js"></script>
+        <script type="text/javascript" src="lib/leaflet-color-markers/js/leaflet-color-markers.js"></script>
+
+        <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+
+        <script type="text/javascript" src="scripts/logger.js"></script>
+        <script type="text/javascript" src="scripts/toggleSwitch.js"></script>
+        <script type="text/javascript" src="scripts/oauth.js"></script>
+        <script type="text/javascript" src="scripts/rest.js"></script>
+        <script type="text/javascript" src="scripts/geoMap.js"></script>
+        <script type="text/javascript" src="scripts/deviceStompClient.js"></script>
+
+        <!-- Vor Cordova, damit die Events ordentlich ankommen -->
+        <script type="text/javascript" src="scripts/geoLocation.js"></script>
+        <script type="text/javascript" src="scripts/geoLocationMerge.js"></script>
+        <script type="text/javascript" src="scripts/geo.js"></script>
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" type="text/css" href="lib/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="lib/leaflet/dist/leaflet.css">
+
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/map.css">
+
+        <title>Map</title>
+    </head>
+    <body>
+        <div id="wrapper">
+            <!-- Navbar inspiriert durch http://getbootstrap.com/components/#navbar -->
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Map</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><a href="index.html">Home</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <div class="side-by-side-menu-item">
+                                    <div class="left-menu-item centered-menu-text">Accuracy</div>
+                                    <div id="highAccuracyToggleSwitch" class="btn-group btn-toggle right-menu-item">
+                                        <button id="lowAccuracyButton" class="btn">Low</button>
+                                        <button id="highAccuracyButton" class="btn">High</button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <div class="side-by-side-menu-item">
+                                    <div class="left-menu-item centered-menu-text">Background location</div>
+                                    <div id="backgroundLocationToggleSwitch" class="btn-group btn-toggle right-menu-item">
+                                        <button id="noBackgroundLocationButton" class="btn">Off</button>
+                                        <button id="backgroundLocationButton" class="btn">On</button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav">
+                            <li class="disabled"><a href="#findDevice" id="findDevice">Find device</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav">
+                            <li><a href="friends.html" id="friendsLink">Friends</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#login" id="loginLink">Logout</a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+
+            <div id="map"></div>
+
+            <footer class="footer">
+                <div class="container">
+                    <p id="status">Loading...</p>
+                </div>
+            </footer>
+        </div>
+
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="scripts/index.js"></script>
+    </body>
+</html>

@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!--
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com http://10.0.2.2:8080 http://localhost:8080 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src *;">
+    -->
+
+    <link rel="shortcut icon" href="favicon.ico" />
+
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+    <script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="scripts/strings.js"></script>
+    <script type="text/javascript" src="scripts/oauth.js"></script>
+    <script type="text/javascript" src="scripts/rest.js"></script>
+    <script type="text/javascript" src="scripts/signup.js"></script>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Im Prinzip das Gleiche wie auf der Login-Seite -->
+    <link rel="stylesheet" type="text/css" href="css/signup.css">
+    <link rel="stylesheet" type="text/css" href="css/button.css">
+    <link rel="stylesheet" type="text/css" href="css/forms.css">
+
+    <title>Sign up</title>
+</head>
+<body>
+    <div id="wrapper">
+        <!-- Navbar inspiriert durch http://getbootstrap.com/components/#navbar -->
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Sign Up</a>
+                </div>
+            </div><!-- /.container-fluid -->
+        </nav>
+
+        <div class="container">
+            <div class="row">
+                <div class="main">
+                    <h3>Please Sign Up, or <a href="login.html">Log In</a></h3>
+                    <form role="form" id="signupForm" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="email" class="col-md-3 control-label">Email</label>
+                            <div class="col-md-9">
+                                <input type="email" class="form-control" id="email" placeholder="Email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="col-md-3 control-label">Username</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="username" placeholder="Username">
+                            </div>
+                            <span class="help-block col-md-3">Please correct the error</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="col-md-3 control-label">Password</label>
+                            <div class="col-md-9">
+                                <input type="password" class="form-control" id="password" placeholder="Password">
+                            </div>
+                            <span class="help-block col-md-3">Please correct the error</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="col-md-3 control-label">Repeat password</label>
+                            <div class="col-md-9">
+                                <input type="password" class="form-control" id="password2" placeholder="Password">
+                            </div>
+                            <span class="help-block col-md-3">Please correct the error</span>
+                        </div>
+                        <button type="submit" id="submitButton" class="btn btn-primary"
+                                    data-loading-text="<i class='glyphicon glyphicon-refresh spinning'></i> Signing up">
+                            Sign Up
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>    
+    <!-- Damit die Alert-Nachrichten funktionieren -->
+    <script type="text/javascript" src="cordova.js"></script>
+</body>
+</html>

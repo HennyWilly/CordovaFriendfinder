@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget defaultlocale="de-DE" id="io.cordova.myapp5b5d7a" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>Friendfinder</name>
+    <description>Diese App wurde im Zuge einer Masterseminararbeit erstellt, das plattform-unabhängige Programmieren mit Cordova zu veranschaulichen.</description>
+    <author email="dev@cordova.apache.org" href="http://cordova.io">Ihr Name hier</author>
+    <vs:template-name>BlankJS</vs:template-name>
+    <vs:toolsetVersion>6.3.1</vs:toolsetVersion>
+    <content src="login.html" />
+    <access origin="http://127.0.0.1*" />
+    <access origin="*" />
+    <access origin="http://10.0.2.2" subdomains="true" />
+    <preference name="SplashScreen" value="screen" />
+    <preference name="windows-target-version" value="10.0" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <platform name="android">
+        <allow-intent href="market:*" />
+    </platform>
+    <platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+    </platform>
+    <platform name="android">
+        <icon density="ldpi" src="res/icons/android/mipmap-ldpi/ic_launcher.png" />
+        <icon density="mdpi" src="res/icons/android/mipmap-mdpi/ic_launcher.png" />
+        <icon density="hdpi" src="res/icons/android/mipmap-hdpi/ic_launcher.png" />
+        <icon density="xhdpi" src="res/icons/android/mipmap-xhdpi/ic_launcher.png" />
+        <icon density="xxhdpi" src="res/icons/android/mipmap-xxhdpi/ic_launcher.png" />
+        <icon density="xxxhdpi" src="res/icons/android/mipmap-xxxhdpi/ic_launcher.png" />
+    </platform>
+    <platform name="ios">
+        <icon height="29" src="res/icons/ios/Icon-29.png" width="29" />
+        <icon height="58" src="res/icons/ios/Icon-29-2x.png" width="58" />
+        <icon height="87" src="res/icons/ios/Icon-29-3x.png" width="87" />
+        <icon height="40" src="res/icons/ios/Icon-40.png" width="40" />
+        <icon height="80" src="res/icons/ios/Icon-40-2x.png" width="80" />
+        <icon height="50" src="res/icons/ios/Icon-50.png" width="50" />
+        <icon height="100" src="res/icons/ios/Icon-50-2x.png" width="100" />
+        <icon height="57" src="res/icons/ios/Icon-57.png" width="57" />
+        <icon height="114" src="res/icons/ios/Icon-57-2x.png" width="114" />
+        <icon height="120" src="res/icons/ios/Icon-60-2x.png" width="120" />
+        <icon height="180" src="res/icons/ios/Icon-60-3x.png" width="180" />
+        <icon height="72" src="res/icons/ios/Icon-72.png" width="72" />
+        <icon height="144" src="res/icons/ios/Icon-72-2x.png" width="144" />
+        <icon height="76" src="res/icons/ios/Icon-76.png" width="76" />
+        <icon height="152" src="res/icons/ios/Icon-76-2x.png" width="152" />
+        <icon height="167" src="res/icons/ios/Icon-83.5-2x.png" width="167" />
+    </platform>
+    <platform name="android">
+        <splash density="land-hdpi" src="res/screens/android/screen-hdpi-landscape.png" />
+        <splash density="land-ldpi" src="res/screens/android/screen-ldpi-landscape.png" />
+        <splash density="land-mdpi" src="res/screens/android/screen-mdpi-landscape.png" />
+        <splash density="land-xhdpi" src="res/screens/android/screen-xhdpi-landscape.png" />
+        <splash density="port-hdpi" src="res/screens/android/screen-hdpi-portrait.png" />
+        <splash density="port-ldpi" src="res/screens/android/screen-ldpi-portrait.png" />
+        <splash density="port-mdpi" src="res/screens/android/screen-mdpi-portrait.png" />
+        <splash density="port-xhdpi" src="res/screens/android/screen-xhdpi-portrait.png" />
+    </platform>
+    <platform name="ios">
+        <splash height="480" src="res/screens/ios/screen-iphone-portrait.png" width="320" />
+        <splash height="960" src="res/screens/ios/screen-iphone-portrait-2x.png" width="640" />
+        <splash height="1024" src="res/screens/ios/screen-ipad-portrait.png" width="768" />
+        <splash height="2048" src="res/screens/ios/screen-ipad-portrait-2x.png" width="1536" />
+        <splash height="768" src="res/screens/ios/screen-ipad-landscape.png" width="1024" />
+        <splash height="1536" src="res/screens/ios/screen-ipad-landscape-2x.png" width="2048" />
+        <splash height="1136" src="res/screens/ios/screen-iphone-568h-2x.png" width="640" />
+        <splash height="1334" src="res/screens/ios/screen-iphone-portrait-667h.png" width="750" />
+        <splash height="2208" src="res/screens/ios/screen-iphone-portrait-736h.png" width="1242" />
+        <splash height="1242" src="res/screens/ios/screen-iphone-landscape-736h.png" width="2208" />
+    </platform>
+    <engine name="android" spec="^6.2.3" />
+    <engine name="ios" spec="^4.4.0" />
+    <plugin name="cordova-plugin-compat" spec="^1.1.0" />
+    <plugin name="cordova-plugin-device" spec="^1.1.6" />
+    <plugin name="cordova-plugin-dialogs" spec="^1.3.3" />
+    <plugin name="cordova-plugin-mauron85-background-geolocation" spec="^2.2.5">
+        <variable name="ACCOUNT_TYPE" value="$PACKAGE_NAME.account" />
+        <variable name="CONTENT_AUTHORITY" value="$PACKAGE_NAME" />
+        <variable name="ALWAYS_USAGE_DESCRIPTION" value="This app requires background location tracking" />
+    </plugin>
+    <plugin name="cordova-plugin-request-location-accuracy" spec="~2.2.1" />
+    <plugin name="cordova-plugin-spinner-dialog" spec="~1.3.1" />
+    <plugin name="cordova-plugin-whitelist" spec="1.3.2" />
+    <plugin name="cordova.plugins.diagnostic.api-22" spec="~2.3.10-api-22" />
+</widget>

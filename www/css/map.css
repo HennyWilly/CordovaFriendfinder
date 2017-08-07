@@ -1,0 +1,19 @@
+﻿html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0; /* to avoid scrollbars */
+}
+
+#wrapper {
+    display: flex; /* use the flex model */
+    min-height: 100%;
+    flex-direction: column; /* learn more: http://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/ */
+}
+
+#map {
+    flex: 1;
+    border: 1px solid orange;
+}
+
+/* Zum Debuggen: Rand um jedes Tile der Leaflet Karte */
+/* .leaflet-tile { border: solid black 5px; } */
