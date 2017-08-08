@@ -257,7 +257,7 @@ GeoLocation.prototype.isRunning = function () {
     var isRunningString = window.sessionStorage.getItem("geolocation_running");
     return isRunningString !== undefined
         && isRunningString !== null
-        && (String(isRunningString).toLowerCase() == 'true');
+        && String(isRunningString).toLowerCase() == 'true';
 };
 
 GeoLocation.prototype._setRunning = function (running) {
@@ -272,7 +272,7 @@ GeoLocation.prototype.isBackgroundLocationEnabled = function () {
         return defaultValue;
     }
 
-    return (String(isBackgroundLocationString).toLowerCase() == 'true');
+    return String(isBackgroundLocationString).toLowerCase() == 'true';
 };
 
 GeoLocation.prototype._setBackgroundLocationEnabled = function (backgroundLocation) {

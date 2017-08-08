@@ -19,8 +19,6 @@
 var app = {
     // Application Constructor
     initialize: function () {
-        this._deviceStompClient = null;
-
         this.bindEvents();
     },
     // Bind Event Listeners
@@ -46,9 +44,6 @@ var app = {
     onDeviceReady: function () {
         var currentPage = window.location.href;
         window.sessionStorage.setItem("page", currentPage); 
-
-        document.addEventListener("pause", app.onPause, false);
-        document.addEventListener("resume", app.onResume, false);
 
         function logout() {
             app.onOAuthExpired();
@@ -76,18 +71,6 @@ var app = {
             var position = JSON.parse(params['position']);
             addMarker(position);
         }
-
-        app._deviceStompInit();
-    },
-    onResume: function () {
-        if (!geoLocation.isBackgroundLocationEnabled()) {
-            app._deviceStompConnect();
-        }
-    },
-    onPause: function () {
-        if (!geoLocation.isBackgroundLocationEnabled()) {
-            app._deviceStompClient.disconnect();
-        }
     },
     onOAuthExpired: function () {
         oAuthExpired_geo();
@@ -104,29 +87,6 @@ var app = {
         }
         var prmstr = window.location.search.substr(1);
         return prmstr !== null && prmstr !== "" ? transformToAssocArray(prmstr) : {};
-    },
-    _deviceStompInit: function () {
-        this._deviceStompClient = new DeviceStompClient(backendUrl + '/localization', device.uuid);
-        this._deviceStompClient.onDevicePositionChange = function (positions) {
-            $.each(positions, function (i, value) {
-                mapPosition(value.id, value.node.latitude, value.node.longitude,
-                    undefined, value.timeAdded, value.username);
-            });
-        };
-        this._deviceStompClient.onDeviceDisconnected = function (deviceId) {
-            map.removeMarker(deviceId);
-        };
-        this._deviceStompConnect();
-    },
-    _deviceStompConnect: function () {
-        var that = this;
-        getFriends_oAuth(function (result) {
-            that._deviceStompClient.connect(result);
-        }, function (jqXHR, textStatus, errorThrown) {
-            navigator.notification.alert(
-                'Get friends of user:\n' + getAjaxErrorMessage(jqXHR, textStatus),
-                function () { }, errorThrown.name);
-        }, this.onOAuthExpired);
     }
 };
 

@@ -56,9 +56,9 @@ GeoMap.prototype._initIcons = function (basePath, baseShadowPath) {
 
     // PhantomJS kann kein String.endsWith, also ist hier die Methode als Funktion...
     // Also für Unit Tests
-    var strEndsWith = function(str, suffix) {
+    var strEndsWith = function (str, suffix) {
         return str.match(suffix + "$") == suffix;
-    }
+    };
 
     if (!strEndsWith(basePath, '/')) {
         basePath = basePath + '/';
@@ -84,7 +84,7 @@ GeoMap.prototype._initIcons = function (basePath, baseShadowPath) {
         popupAnchor: [1, -34],
         shadowSize: [41, 41]
     });
-}
+};
 
 /**
  * Wird aufgerufen, wenn sich das Zoomlevel der Karte ändert.
@@ -115,7 +115,7 @@ GeoMap.prototype.onTileLoad = function (x, y, z) {
  */
 GeoMap.prototype.onPopupOpen = function (key, marker, popup) {
     // Leere Implementierung
-}
+};
 
 /**
  * Gibt den aktuellen Zoomlevel der Karte zurück.
@@ -141,6 +141,7 @@ GeoMap.prototype.navigateTo = function (lat, lon) {
  * @param {Number} lat Latitude der Position
  * @param {Number} lon Longitude der Position
  * @param {Boolean} visible Gibt an, ob der Marker sichtbar sein soll (standardmäßig true)
+ * @param {Boolean} redMarker Gibt an, ob der Marker rot oder blau sein soll
  * @returns {undefined}
  */
 GeoMap.prototype.setMarkerPosition = function (key, lat, lon, visible, redMarker) {
@@ -181,6 +182,7 @@ GeoMap.prototype.setMarkerPosition = function (key, lat, lon, visible, redMarker
  * Zeichnet den Marker mit dem gegebenen Namen neu oder versteckt diesen.
  * @param {String} key Der eindeutige Name des Markers
  * @param {Boolean} visible Gibt an, ob der Marker sichtbar sein soll (standardmäßig true)
+ * @param {Boolean} redMarker Gibt an, ob der Marker rot oder blau sein soll
  * @returns {undefined}
  */
 GeoMap.prototype.updateMarker = function (key, visible, redMarker) {

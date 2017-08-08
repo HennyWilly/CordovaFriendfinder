@@ -73,8 +73,8 @@ function addUserListEntry(list, name, isFriend, isFriendList) {
         var showLastPositionButton = "";
         if (isFriend) {
             showLastPositionButton = '<button type="button" class="btn btn-default" id="showPositionButton">' +
-                    '        Show last position' +
-                    '    </button>'
+                '        Show last position' +
+                '    </button>';
         }
 
         return '<div class="thumbnail" id="' + uuid + '">' +
@@ -165,12 +165,19 @@ function registerLifeCycleEvents() {
         backgroundEnabled = geoLocation.isBackgroundLocationEnabled();
         running = geoLocation.isRunning();
 
-        if (running && !backgroundEnabled) {
-            geoLocation.stopGeoWatch();
+        if (!backgroundEnabled) {
+            deviceStompClient.disconnect();
+            if (running) {
+                geoLocation.stopGeoWatch();
+            }
         }
     }, false);
     document.addEventListener("resume", function () {
         logger.log("onResume()");
+
+        if (!deviceStompClient.isConnected()) {
+            deviceStompConnect(false);
+        }
 
         if (running && !backgroundEnabled) {
             geoLocation.startGeoWatch();
@@ -217,6 +224,7 @@ function onDeviceReady() {
     // Logger initialisieren, da geoMain nicht aufgerufen wurde...
     logger = new Logger(undefined, undefined);
 
+    deviceStompInit(false);
     locationInit(false);
     registerLocationStateChangeHandler(false);
     restartGeoLocation();

@@ -158,7 +158,7 @@ ToggleSwitch.prototype.disableFirstButton = function () {
     this._firstButton.removeClass('btn-default');
 
     this._firstButton.prop('disabled', true);
-}
+};
 
 /**
  * Gibt zurück, ob der erste Button selektiert ist.
@@ -176,7 +176,7 @@ ToggleSwitch.prototype.isFirstActive = function () {
         }
     });
     return result;
-}
+};
 
 /**
  * Gibt zurück, ob der zweite Button selektiert ist.
@@ -194,4 +194,4 @@ ToggleSwitch.prototype.isSecondActive = function () {
         }
     });
     return result;
-}
+};

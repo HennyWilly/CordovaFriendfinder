@@ -11,6 +11,11 @@
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 
+        <script type="text/javascript" src="lib/sockjs-client/dist/sockjs.min.js"></script>
+        <script type="text/javascript" src="lib/stomp-websocket/lib/stomp.min.js"></script>
+
+        <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+
         <script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script>
         <script type="text/javascript" src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
 
@@ -19,6 +24,7 @@
         <script type="text/javascript" src="scripts/oauth.js"></script>
         <script type="text/javascript" src="scripts/rest.js"></script>
         <script type="text/javascript" src="scripts/friends.js"></script>        
+        <script type="text/javascript" src="scripts/deviceStompClient.js"></script>
         
         <!-- Vor Cordova, damit die Events ordentlich ankommen -->
         <script type="text/javascript" src="scripts/geoLocation.js"></script>

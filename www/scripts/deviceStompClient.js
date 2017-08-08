@@ -2,12 +2,12 @@
 
 /**
  * Erstellt eine neue Instanz der StompClient Klasse, die zum Versenden und Empfangen von Servernachrichten dient.
- * @param {type} url Die URL des Servers
- * @param {type} deviceUUID Die UUID des Gerätes.
+ * @param {String} url Die URL des Servers
+ * @param {String} deviceUUID Die UUID des Gerätes.
  * @returns {DeviceStompClient} Die neue StompClient-Instanz
  */
 function DeviceStompClient(url, deviceUUID) {
-    this._url = url;
+    this._url = String(url);
     this._deviceUUID = String(deviceUUID);
 
     this._stompClient = undefined;
@@ -23,7 +23,7 @@ DeviceStompClient.prototype.onDevicePositionChange = function (positions) {
 
 /**
  * Wird aufgerufen, wenn ein anders Gerät die Verbindung zum Server trennt.
- * @param {type} deviceId Die UUID des Gerätes, das die Verbindung getrennt hat.
+ * @param {String} deviceId Die UUID des Gerätes, das die Verbindung getrennt hat.
  * @returns {undefined}
  */
 DeviceStompClient.prototype.onDeviceDisconnected = function (deviceId) {
@@ -43,7 +43,6 @@ DeviceStompClient.prototype.isConnected = function () {
  * @returns {undefined}
  */
 DeviceStompClient.prototype.connect = function (extensions) {
-
     if (this.isConnected()) {
         return;
     }

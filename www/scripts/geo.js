@@ -5,6 +5,7 @@ var initialPositionSet = false;
 var minMarkerZoomLevel = 12;
 var accuracySwitch = null;
 var backgroundSwitch = null;
+var deviceStompClient = null;
 
 function oAuthExpired_geo() {
     // Damit der Dialog verschwindet, wenn auf die Login-Seite umgeleitet wird.
@@ -43,7 +44,7 @@ function mapInit() {
 }
 
 function locationInit(uiAvailable) {
-    if (typeof (uiAvailable) !== "boolean") {
+    if (typeof uiAvailable !== "boolean") {
         uiAvailable = true;
     }
 
@@ -126,8 +127,44 @@ function accuracySwitchInit() {
     registerLocationStateChangeHandler();
 }
 
+function deviceStompInit(uiAvailable) {
+    if (typeof uiAvailable !== "boolean") {
+        uiAvailable = true;
+    }
+
+    deviceStompClient = new DeviceStompClient(backendUrl + '/localization', device.uuid);
+
+    if (uiAvailable) {
+        deviceStompClient.onDevicePositionChange = function (positions) {
+            $.each(positions, function (i, value) {
+                mapPosition(value.id, value.node.latitude, value.node.longitude,
+                    undefined, value.timeAdded, value.username);
+            });
+        };
+        deviceStompClient.onDeviceDisconnected = function (deviceId) {
+            map.removeMarker(deviceId);
+        };
+    }
+
+    deviceStompConnect(uiAvailable);
+}
+
+function deviceStompConnect(uiAvailable) {
+    if (uiAvailable) {
+        getFriends_oAuth(function (result) {
+            deviceStompClient.connect(result);
+        }, function (jqXHR, textStatus, errorThrown) {
+            navigator.notification.alert(
+                'Get friends of user:\n' + getAjaxErrorMessage(jqXHR, textStatus),
+                function () { }, errorThrown.name);
+        }, oAuthExpired_geo);
+    } else {
+        deviceStompClient.connect([]);
+    }
+}
+
 function registerLocationStateChangeHandler(uiAvailable) {
-    if (typeof (uiAvailable) !== "boolean") {
+    if (typeof uiAvailable !== "boolean") {
         uiAvailable = true;
     }
 
@@ -243,13 +280,19 @@ function addMarker(devicePosition) {
 // life cycle
 function onPause() {
     logger.log("onPause()");
+
     if (!geoLocation.isBackgroundLocationEnabled()) {
+        deviceStompClient.disconnect();
         geoLocation.stopGeoWatch();
     }
 }
 
 function onResume() {
     logger.log("onResume()");
+
+    if (!deviceStompClient.isConnected()) {
+        deviceStompConnect();
+    }
 
     // Prüft Accuracy- und Background-Buttons
     fullLocationStartup();
@@ -282,7 +325,8 @@ function onDeviceReady_geo() {
     mapInit();
 
     registerLifeCycleEvents_geo();
-    
+
+    deviceStompInit();
     locationInit();
     accuracySwitchInit();
     backgroundSwitchInit();

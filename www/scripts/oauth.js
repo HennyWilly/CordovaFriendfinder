@@ -44,7 +44,7 @@ OAuth.prototype.getAccessToken = function () {
         return undefined;
     }
     return tokenJson["access_token"];
-}
+};
 
 /**
  * Gibt das gespeicherte Refresh-Token zurück, falls es existiert.
@@ -56,7 +56,7 @@ OAuth.prototype.getRefreshToken = function () {
         return undefined;
     }
     return tokenJson["refresh_token"];
-}
+};
 
 /**
  * Speichert das übergebene Token.
@@ -75,7 +75,7 @@ OAuth.prototype.storeToken = function (token, usePermantentStorage) {
     if (!!usePermantentStorage) {
         window.localStorage[this._storageName] = stringToken;
     }
-}
+};
 
 /**
  * Aktualisiert das gespeicherte Token mit dem übergebenen Token.
@@ -85,7 +85,7 @@ OAuth.prototype.storeToken = function (token, usePermantentStorage) {
 OAuth.prototype.refreshToken = function (token) {
     var permanent = window.sessionStorage[this._storageName] === window.localStorage[this._storageName];
     this.storeToken(token, permanent);
-}
+};
 
 /**
  * Löscht das gespeicherte Token.
@@ -94,4 +94,4 @@ OAuth.prototype.refreshToken = function (token) {
 OAuth.prototype.clearToken = function () {
     delete window.sessionStorage[this._storageName];
     delete window.localStorage[this._storageName];
-}
+};
