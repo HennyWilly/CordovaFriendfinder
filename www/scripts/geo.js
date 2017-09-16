@@ -96,17 +96,9 @@ function accuracySwitchInit() {
     }
 
     accuracySwitch.onToggleButtonChanged = function (button) {
-        var recheckLocationAvailable = function (highAccuracy) {
+        var recheckLocationAvailable = function () {
             // Hier wird geprüft, ob die vorherige Genauigkeit immer noch verfügbar ist.
-            cordova.plugins.diagnostic.isLocationEnabled(function (available) {
-                if (!available) {
-                    clearSwitches();
-                } else {
-                    accuracySwitch.toggle();
-                }
-            }, function () {
-                clearSwitches();
-            });
+            updateAccuracyButtons();
         };
 
         var backgroundPosition = backgroundSwitch.isSecondActive();
@@ -114,17 +106,29 @@ function accuracySwitchInit() {
             geoLocation.stopGeoWatch();
         } else if (button[0] === $("#lowAccuracyButton")[0]) {
             geoLocation.requestDeviceLocation(false, backgroundPosition, function () {
-                recheckLocationAvailable(true);
+                recheckLocationAvailable();
             });
         } else if (button[0] === $("#highAccuracyButton")[0]) {
             geoLocation.requestDeviceLocation(true, backgroundPosition, function () {
-                recheckLocationAvailable(false);
+                recheckLocationAvailable();
             });
         }
     };
 
     initialGpsRequest();
     registerLocationStateChangeHandler();
+}
+
+function updateAccuracyButtons() {
+    cordova.plugins.diagnostic.isLocationEnabled(function (available) {
+        if (!available) {
+            clearSwitches();
+        } else {
+            accuracySwitch.toggle();
+        }
+    }, function () {
+        clearSwitches();
+    });
 }
 
 function deviceStompInit(uiAvailable) {
@@ -197,13 +201,23 @@ function fullLocationStartup() {
 
 function initialGpsRequest() {
     geoLocation.isGpsEnabled(function (hasGps) {
-        if (hasGps) {
-            accuracySwitch.enableSecond();
+        var gps = undefined;
+        if (!geoLocation.isInitialized()) {
+            if (hasGps) {
+                accuracySwitch.enableSecond();
+            } else {
+                accuracySwitch.enableFirst();
+            }
+            gps = hasGps;
         } else {
-            accuracySwitch.enableFirst();
+            if (geoLocation.isHighAccuracy()) {
+                accuracySwitch.enableSecond();
+            } else {
+                accuracySwitch.enableFirst();
+            }
+            // gps = undefined, so the default value is used...
         }
-
-        geoLocation.requestDeviceLocation(hasGps, undefined, function () {
+        geoLocation.requestDeviceLocation(gps, undefined, function () {
             clearSwitches();
         });
     });
@@ -294,8 +308,13 @@ function onResume() {
         deviceStompConnect();
     }
 
-    // Prüft Accuracy- und Background-Buttons
-    fullLocationStartup();
+    // Sonderfall: Verhindert endloses Aufpoppen der Permission-Anfrage, wenn der Benutzer diese ablehnt...
+    if (geoLocation.hasPermission()) {
+        // Prüft Accuracy- und Background-Buttons
+        fullLocationStartup();
+    } else {
+        updateAccuracyButtons();
+    }
 }
 
 function geoMain() {

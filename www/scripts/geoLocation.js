@@ -107,7 +107,7 @@ GeoLocation.prototype._initBackgroundGeolocation = function () {
  */
 GeoLocation.prototype.startGeoWatch = function (highAccuracy, backgroundLocation) {
     if (highAccuracy === undefined) {
-        highAccuracy = this.getDesiredAccuracy() <= this._highAccuracyValue;
+        highAccuracy = this.isHighAccuracy();
     }
     if (backgroundLocation === undefined) {
         backgroundLocation = this.isBackgroundLocationEnabled();
@@ -137,8 +137,10 @@ GeoLocation.prototype.startGeoWatch = function (highAccuracy, backgroundLocation
     var _this = this;
     this._geoLocationProvider.backgroundGeolocation.start(function() {
         _this._setRunning(true);
+        _this._setPermission(true);
     }, function (error) {
         _this._setRunning(false);
+        _this._setPermission(false);
     });
 };
 
@@ -166,6 +168,10 @@ GeoLocation.prototype.stopGeoWatch = function () {
 GeoLocation.prototype.requestDeviceLocation = function (requestGps, backgroundPosition, errorCallback) {
     var requestAccuracy;
     var accuracyString;
+    if (requestGps === undefined || requestGps === null) {
+        requestGps = this.isHighAccuracy();
+    }
+
     if (!!requestGps) {
         requestAccuracy = this._geoLocationProvider.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY;
         accuracyString = "High Accuracy";
@@ -182,10 +188,12 @@ GeoLocation.prototype.requestDeviceLocation = function (requestGps, backgroundPo
             _this._geoLocationProvider.locationAccuracy.request(function () {
                 _this._geolocationEnabled = true;
                 _this.startGeoWatch(undefined, backgroundPosition);
+                _this._setPermission(true);
             }, function (error) {
                 console.error("Request failed");
                 _this._geolocationEnabled = false;
                 _this._setRunning(false);
+                _this._setPermission(false);
 
                 if (errorCallback !== undefined) {
                     errorCallback(error);
@@ -209,6 +217,7 @@ GeoLocation.prototype.requestDeviceLocation = function (requestGps, backgroundPo
             // Android: No location permission
             _this._geolocationEnabled = true;
             _this.startGeoWatch(undefined, backgroundPosition);
+            _this._setPermission(true);
         }
     });
 };
@@ -249,10 +258,18 @@ GeoLocation.prototype.supportsMultipleAccuracies = function () {
     throw {name: "NotImplementedError", message: "Must be implemented by merge file"};
 };
 
+/**
+ * Gibt zurück, ob man auf die Position zugreifen kann.
+ * @returns {boolean} true, wenn man auf die Position zugreifen kann; sonst false
+ */
 GeoLocation.prototype.isLocationEnabled = function () {
     return this._geolocationEnabled;
 };
 
+/**
+ * Gibt zurück, ob sich die GeoWatch in der Auführung befindet.
+ * @returns {boolean} true, wenn die GeoWatch läuft; sonst false
+ */
 GeoLocation.prototype.isRunning = function () {
     var isRunningString = window.sessionStorage.getItem("geolocation_running");
     return isRunningString !== undefined
@@ -264,6 +281,10 @@ GeoLocation.prototype._setRunning = function (running) {
     window.sessionStorage.setItem("geolocation_running", String(running)); 
 };
 
+/**
+ * Gibt zurück, ob die Position auch im Hintergrund verfolgt wird.
+ * @returns {boolean} true, wenn die Position auch im Hintergrund verfolgt wird; sonst false
+ */
 GeoLocation.prototype.isBackgroundLocationEnabled = function () {
     var isBackgroundLocationString = window.sessionStorage.getItem("geolocation_backgroundLocation");
     if (isBackgroundLocationString === undefined || isBackgroundLocationString === null) {
@@ -280,6 +301,10 @@ GeoLocation.prototype._setBackgroundLocationEnabled = function (backgroundLocati
     window.sessionStorage.setItem("geolocation_backgroundLocation", String(backgroundLocation)); 
 };
 
+/**
+ * Gibt die verwendete Genauigkeit zurück. Je kleiner, desto genauer.
+ * @returns {Number} Die verwendete Genauigkeit der GeoWatch
+ */
 GeoLocation.prototype.getDesiredAccuracy = function () {
     var desiredAccuracyString = window.sessionStorage.getItem("geolocation_desiredAccuracy");
     if (desiredAccuracyString === undefined || desiredAccuracyString === null) {
@@ -294,4 +319,41 @@ GeoLocation.prototype.getDesiredAccuracy = function () {
 GeoLocation.prototype._setDesiredAccuracy = function (desiredAccuracy) {
     this._geolocationOpts.desiredAccuracy = desiredAccuracy;
     window.sessionStorage.setItem("geolocation_desiredAccuracy", String(desiredAccuracy));
+};
+
+/**
+ * Gibt zurück, ob die Instanz schon einmal initialisiert wurde, d.h. die Session-Variablen sind schon vorhanden.
+ * @returns {boolean} true, wenn die Instanz schon einmal initialisiert wurde; sonst false
+ */
+GeoLocation.prototype.isInitialized = function () {
+    var desiredAccuracyString = window.sessionStorage.getItem("geolocation_desiredAccuracy");
+    return desiredAccuracyString !== undefined && desiredAccuracyString !== null;
+};
+
+/**
+ * Gibt zurück, ob eine hohe Genauigkeit für die GeoWatch verwendet wird.
+ * @returns {boolean} true, wenn eine hohe Genauigkeit verwendet wird; sonst false
+ */
+GeoLocation.prototype.isHighAccuracy = function () {
+    return this.getDesiredAccuracy() <= this._highAccuracyValue;
+};
+
+GeoLocation.prototype._setPermission = function (hasPermission) {
+    window.sessionStorage.setItem("geolocation_permission", String(hasPermission));
+};
+
+/**
+ * Gibt zurück, ob der Zugriff auf die Positionsdaten des Geräts erlaubt wurde.
+ * @returns {boolean} true, wenn der Zugriff auf die Positionsdaten erlaubt wurde; sonst false
+ */
+GeoLocation.prototype.hasPermission = function () {
+    var permissionString = window.sessionStorage.getItem("geolocation_permission");
+    if (permissionString === undefined || permissionString === null) {
+        var defaultValue = true;
+        this._setPermission(defaultValue);
+        return defaultValue;
+    }
+
+    // Boolean("false") => true... WTF?!?
+    return permissionString.toLowerCase() === "true";
 };
